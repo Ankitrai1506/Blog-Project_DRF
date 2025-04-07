@@ -10,7 +10,7 @@ from django.db.models import Q
 class PublicView(APIView):
 
     def get(self, request):
-        blog= Blog.objects.all().order_by('?')
+        blog= Blog.objects.all().order_by('-created_at')
         if request.GET.get('search'):
             search= request.GET.get('search')
             blogs= blog.filter(Q(title__icontains= search)| Q(blog_text__icontains= search))
