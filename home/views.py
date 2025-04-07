@@ -63,7 +63,7 @@ class BlogView(APIView):
             return  Response({"message": 'blog_id is required'}, status= status.HTTP_400_BAD_REQUEST)
         
 
-        blog= Blog.objects.filter(uid= blog_uid).first()
+        blog= Blog.objects.get(uid= blog_uid)
 
         if request.user != blog.user:
             return Response({
@@ -96,7 +96,7 @@ class BlogView(APIView):
             return  Response({"message": 'blog_id is required'}, status= status.HTTP_400_BAD_REQUEST)
 
 
-        blog= Blog.objects.filter(uid= blog_uid).first()
+        blog= Blog.objects.get(uid= blog_uid)
 
         if request.user != blog.user:
             return Response({
@@ -124,7 +124,7 @@ class CommentView(APIView):
         if not blog_uid:
             return Response({'message': 'blog_ID is required'}, status= status.HTTP_400_BAD_REQUEST)
         
-        blog= Blog.objects.filter(uid= blog_uid, user= request.user).first()
+        blog= Blog.objects.get(uid= blog_uid, user= request.user)
         if not blog:
             return Response({'message': "Its not your blog, You cant see Comment "}, status= status.HTTP_404_NOT_FOUND)
         
@@ -139,7 +139,7 @@ class CommentView(APIView):
         if not blog_uid:
             return Response({'message': "blog_id is required"}, status= status.HTTP_404_NOT_FOUND)
 
-        blog= Blog.objects.filter(uid= blog_uid).first()
+        blog= Blog.objects.get(uid= blog_uid)
         if not blog:
             return Response({'message': "blog not found"}, status= status.HTTP_404_NOT_FOUND)
         
@@ -155,7 +155,7 @@ class CommentView(APIView):
         if not comment_uid:
             return Response({'message': "comment uid required"}, status= status.HTTP_404_NOT_FOUND)
 
-        comment= Comment.objects.filter(uid= comment_uid, user= request.user).first()
+        comment= Comment.objects.get(uid= comment_uid, user= request.user)
         if not comment:
             return Response({'message': "You are Not Authorized to update the comment"}, status= status.HTTP_404_NOT_FOUND)
         
@@ -167,7 +167,7 @@ class CommentView(APIView):
     def delete(self, request):
         comment_uid= request.data.get("comment_uid")
 
-        comment= Comment.objects.filter(uid= comment_uid, user= request.user).first()
+        comment= Comment.objects.get(uid= comment_uid, user= request.user)
 
         if not comment:
             return Response({"message": 'You are Not authorized to delete'}, status= status.HTTP_404_NOT_FOUND)
@@ -186,7 +186,7 @@ class LikeView(APIView):
         if not blog_uid:
             return Response({'message': 'Blog uid required'}, status= status.HTTP_400_BAD_REQUEST)
         
-        blog= Blog.objects.filter(uid= blog_uid).first()
+        blog= Blog.objects.get(uid= blog_uid)
 
         if not blog:
             return Response({'message': "blog not found"}, status= status.HTTP_404_NOT_FOUND)
@@ -206,11 +206,11 @@ class LikeView(APIView):
         if not blog_uid:
             return Response({'message': 'Blog UID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        blog = Blog.objects.filter(uid=blog_uid).first()
+        blog = Blog.objects.get(uid=blog_uid)
         if not blog:
             return Response({'message': "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        like = Like.objects.filter(user=request.user, blog=blog).first()
+        like = Like.objects.get(user=request.user, blog=blog)
         if like:
             # blog.like_count -= 1
             # blog.save()
