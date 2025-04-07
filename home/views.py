@@ -212,8 +212,8 @@ class LikeView(APIView):
 
         like = Like.objects.get(user=request.user, blog=blog)
         if like:
-            # blog.like_count -= 1
-            # blog.save()
+            blog.like_count -= 1
+            blog.save()
             like.delete()
             return Response({'message': "Like removed"}, status=status.HTTP_200_OK)
         else:

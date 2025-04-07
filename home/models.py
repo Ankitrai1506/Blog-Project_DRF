@@ -43,15 +43,15 @@ class Like(Basemodel):
     class Meta:
         unique_together= ['user', 'blog']
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.blog.like_count += 1
-            self.blog.save()
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         self.blog.like_count += 1
+    #         self.blog.save()
+    #     super().save(*args, **kwargs)
 
 
-    def delete(self, *args, **kwargs):
-        self.blog.like_count -= 1
-        self.blog.save()
-        super().delete(*args, **kwargs)
+    # def delete(self, *args, **kwargs):
+    #     self.blog.like_count -= 1
+    #     self.blog.save()
+    #     super().delete(*args, **kwargs)
 
